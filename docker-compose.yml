@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  # === FRONTEND (Angular) ===
+  frontend:
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    container_name: gameoflife-frontend
+    ports:
+      - "4200:80" # Angular app exposed on localhost:4200
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # === BACKEND (Node + Express) ===
+  backend:
+    build:
+      context: ./src
+      dockerfile: ./server/Dockerfile
+    container_name: gameoflife-backend
+    ports:
+      - "5000:5000"
+    env_file:
+      - ./src/server/.env
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

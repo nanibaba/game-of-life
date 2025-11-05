@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { BitArray } from '../types/bit';
 import { oneOrZero } from '../helpers/oneOrZero';
+import { createNextGeneration } from './cellHandler';
 import { matrixEquals } from '../helpers/matrixEquals';
 
 const BOARD_WIDTH = 800;
 const BOARD_HEIGHT = 800;
 const RESOLUTION = 10;
-
-type BitArray = number[];
 
 @Component({
   selector: 'app-game-board',
@@ -43,12 +43,10 @@ export class GameBoardComponent implements AfterViewInit {
 
   private animate(): void {
     this.iterations++;
-    console.log(this.iterations);
-    const next = this.createNextGeneration(this.gameBoard);
-    const afterNext = this.createNextGeneration(next);
+    const next = createNextGeneration(this.gameBoard, this.rows, this.cols);
+    const afterNext = createNextGeneration(next, this.rows, this.cols);
     this.isFinalState = matrixEquals(this.gameBoard, afterNext);
     if (this.isFinalState) {
-      console.log(this.iterations);
       if (this.animationFrameId !== null) {
         cancelAnimationFrame(this.animationFrameId);
         this.animationFrameId = null;
@@ -72,31 +70,5 @@ export class GameBoardComponent implements AfterViewInit {
         c.strokeRect(x * res, y * res, res, res);
       });
     });
-  }
-
-  private getCell(board: BitArray[], r: number, c: number): number {
-    const row = (r + this.rows) % this.rows;
-    const col = (c + this.cols) % this.cols;
-    return board[row][col];
-  }
-
-  private createNextGeneration(board: BitArray[]): BitArray[] {
-    const next: BitArray[] = board.map(row => [...row]);
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.cols; x++) {
-        let liveNeighbors = 0;
-        for (let dy = -1; dy <= 1; dy++) {
-          for (let dx = -1; dx <= 1; dx++) {
-            if (dy === 0 && dx === 0) continue;
-            liveNeighbors += this.getCell(board, y + dy, x + dx);
-          }
-        }
-        const cell = board[y][x];
-        const survives = cell === 1 && (liveNeighbors === 2 || liveNeighbors === 3);
-        const born = cell === 0 && liveNeighbors === 3;
-        next[y][x] = survives || born ? 1 : 0;
-      }
-    }
-    return next;
   }
 }
