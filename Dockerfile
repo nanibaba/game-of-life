@@ -21,5 +21,10 @@ RUN rm -rf /usr/share/nginx/html/*
 
 COPY --from=build /app/dist/game-of-life/browser /usr/share/nginx/html
 
+# Copy entrypoint script that will generate env.js at container startup
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+
 EXPOSE 80
+ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
