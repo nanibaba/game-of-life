@@ -6,7 +6,10 @@ WORKDIR /app
 
 # Copy only package files first for better layer caching
 COPY package*.json ./
-RUN npm install
+# Install all dependencies (including dev) in the build stage so the Angular CLI
+# and build tooling are available to run `ng build`. The final image will only
+# contain the built static files copied into the nginx image.
+RUN npm ci
 
 # Copy entire repo into /app and build the Angular app
 COPY . .
