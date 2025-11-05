@@ -4,8 +4,10 @@ services:
   # === FRONTEND (Angular) ===
   frontend:
     build:
-      context: ./src
-      dockerfile: Dockerfile
+      # Build from repository root so the Angular package.json and tooling (at project root)
+      # are available to the Docker build context
+      context: .
+      dockerfile: ./Dockerfile
     container_name: gameoflife-frontend
     ports:
       - "4200:80" # Angular app exposed on localhost:4200
@@ -17,8 +19,10 @@ services:
   # === BACKEND (Node + Express) ===
   backend:
     build:
-      context: ./src
-      dockerfile: ./server/Dockerfile
+      # Build only from the server folder so the server package.json (src/server/package.json)
+      # is available in the build context and Dockerfile can use COPY package*.json
+      context: ./src/server
+      dockerfile: Dockerfile
     container_name: gameoflife-backend
     ports:
       - "5000:5000"
