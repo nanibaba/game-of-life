@@ -21,7 +21,7 @@ git clone https://github.com/nanibaba/game-of-life.git
 cd game-of-life
 
 # Start the application using Docker Compose
-docker-compose up
+docker-compose up --build
 ```
 
 The application will be available at:
