@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "game-of-life-backend",
   "version": "1.0.0",
   "description": "MongoDB Server Instance",
   "license": "ISC",

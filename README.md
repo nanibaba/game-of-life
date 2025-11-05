@@ -1,59 +1,106 @@
-# GameOfLife
+# Game of Life
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+An implementation of Conway's Game of Life using Angular and Node.js, with MongoDB for pattern storage.
 
-## Development server
+## Prerequisites
 
-To start a local development server, run:
+Before you begin, ensure you have the following installed:
 
-```bash
-ng serve
-```
+- **Node.js**: Version 24.x or later (using Node 24-LTS is recommended)
+- **npm**: Version 10.x or later (comes with Node.js)
+- **Docker**: Version 24.x or later
+- **Docker Compose**: Version 2.x or later (usually included with Docker Desktop)
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Quick Start with Docker
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+The easiest way to run the application is using Docker Compose:
 
 ```bash
-ng generate --help
+# Clone the repository
+git clone https://github.com/nanibaba/game-of-life.git
+cd game-of-life
+
+# Start the application using Docker Compose
+docker-compose up
 ```
 
-## Building
+The application will be available at:
+- Frontend: http://localhost:4200
+- Backend API: http://localhost:3000
 
-To build the project run:
+## Manual Development Setup
+
+If you prefer to run the application without Docker for development:
+
+### Frontend (Angular)
 
 ```bash
-ng build
+# Install dependencies
+npm install
+
+# Start development server
+npm start
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+The Angular development server will be available at http://localhost:4200
 
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+### Backend (Node.js)
 
 ```bash
-ng test
+# Navigate to server directory
+cd src/server
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
 ```
 
-## Running end-to-end tests
+The backend server will be available at http://localhost:3000
 
-For end-to-end (e2e) testing, run:
+## Running Tests
+
+To run the tests:
 
 ```bash
-ng e2e
+# Run frontend tests
+npm test
+
+# Run in headless mode (CI/CD)
+npm test -- --watch=false --browsers=ChromeHeadless
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Project Structure
 
-## Additional Resources
+```
+├── src/
+│   ├── app/           # Angular application code
+│   ├── server/        # Node.js backend
+│   └── environments/  # Environment configurations
+├── docker-compose.yml # Docker Compose configuration
+├── Dockerfile         # Frontend Dockerfile
+└── src/server/Dockerfile  # Backend Dockerfile
+```
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Technologies Used
+
+- Frontend:
+  - Angular 20.3.0
+  - TypeScript
+  - Angular CLI
+  - Karma & Jasmine for testing
+- Backend:
+  - Node.js
+  - Express 5.1.0
+  - MongoDB with Mongoose 8.19.3
+- Infrastructure:
+  - Docker
+  - Nginx (for production builds)
+
+## Development Notes
+
+- The frontend runs on port 4200 by default
+- The backend API runs on port 3000
+- Hot reloading is enabled for both frontend and backend in development mode
+- Tests use Chrome by default, but can be run headless for CI/CD
