@@ -26,7 +26,7 @@ docker-compose up --build
 
 The application will be available at:
 - Frontend: http://localhost:4200
-- Backend API: http://localhost:3000
+- Backend API: http://localhost:5000
 
 ## Manual Development Setup
 
@@ -57,7 +57,7 @@ npm install
 npm run dev
 ```
 
-The backend server will be available at http://localhost:3000
+The backend server will be available at http://localhost:5000
 
 ## Running Tests
 
@@ -101,6 +101,6 @@ npm test -- --watch=false --browsers=ChromeHeadless
 ## Development Notes
 
 - The frontend runs on port 4200 by default
-- The backend API runs on port 3000
+- The backend API runs on port 5000
 - Hot reloading is enabled for both frontend and backend in development mode
 - Tests use Chrome by default, but can be run headless for CI/CD
