@@ -1,10 +1,6 @@
 // Angular component responsible for rendering and advancing the
 // Game of Life simulation on an HTML canvas.
-//
-// This file contains detailed comments to explain each step of the
-// component lifecycle, canvas initialization, animation loop, and
-// stat-saving behavior.
-import { AfterViewInit, Component, ElementRef, inject, Injectable, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { BitArray } from '../types/bit';
 import { oneOrZero } from '../helpers/oneOrZero';
 import { createNextGeneration } from './cellHandler';
@@ -25,10 +21,6 @@ const RESOLUTION = 10;
   templateUrl: './game-board.component.html',
   styleUrls: ['./game-board.component.css'],
 })
-// Injectable is included so Angular can provide this component if
-// needed via DI; the component primarily renders itself through the
-// template and manages its own lifecycle.
-@Injectable({providedIn: 'root'})
 export class GameBoardComponent implements AfterViewInit {
   // Reference to the canvas element in the template. We use ViewChild
   // to obtain the native element after the view initializes.
@@ -143,7 +135,6 @@ export class GameBoardComponent implements AfterViewInit {
         cancelAnimationFrame(this.animationFrameId);
         this.animationFrameId = null;
       }
-      // Optionally persist run statistics to the configured API.
       this.saveStats();
       return;
     }
